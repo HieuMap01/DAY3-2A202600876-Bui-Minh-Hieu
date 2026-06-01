@@ -2,6 +2,8 @@
 
 - **Team Name**: TripWise
 - **Project**: AI Agent lập kế hoạch du lịch thông minh
+- **Individual Contribution**: Places/Attraction Tool Developer
+- **Team Member**: [Hoàng Phương Thảo, Nguyễn Sĩ Việt, Lương Quốc Đoàn, Bùi Minh Hiếu, Trương Hải Quân, Nguyễn Mai Hồng Trâm, Trịnh Vũ Anh Tuấn, Nguyễn Tiến Sĩ]
 - **Deployment Date**: 2026-06-01
 
 ---
