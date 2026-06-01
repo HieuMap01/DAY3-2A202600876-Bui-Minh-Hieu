@@ -5,6 +5,7 @@ import os
 import re
 import time
 from typing import Any, Callable, Dict, List, Optional, Tuple
+from xml.etree import ElementTree
 
 from src.core.llm_provider import LLMProvider
 from src.telemetry.logger import logger
@@ -154,16 +155,41 @@ AVAILABLE TOOLS:
 
     def _extract_action(self, content: str) -> Optional[Tuple[str, tuple]]:
         m = self.ACTION_RE.search(content)
-        if not m:
+        if m:
+            name, args_str = m.group(1), m.group(2).strip()
+            try:
+                parsed = ast.literal_eval(f"({args_str})")
+                if not isinstance(parsed, tuple):
+                    parsed = (parsed,)
+                return name, parsed
+            except (SyntaxError, ValueError) as e:
+                logger.log_event("PARSE_ERROR", {"tool": name, "args": args_str, "error": str(e)})
+                return None
+
+        return self._extract_xml_action(content)
+
+    def _extract_xml_action(self, content: str) -> Optional[Tuple[str, tuple]]:
+        """Parse the XML-style tool calls emitted by some compatible endpoints."""
+        start = content.find("<tool_call>")
+        end = content.find("</tool_call>")
+        if start == -1 or end == -1:
             return None
-        name, args_str = m.group(1), m.group(2).strip()
+
         try:
-            parsed = ast.literal_eval(f"({args_str})")
-            if not isinstance(parsed, tuple):
-                parsed = (parsed,)
-            return name, parsed
-        except (SyntaxError, ValueError) as e:
-            logger.log_event("PARSE_ERROR", {"tool": name, "args": args_str, "error": str(e)})
+            xml = content[start : end + len("</tool_call>")]
+            root = ElementTree.fromstring(xml)
+            name = (root.findtext(".//name") or "").strip()
+            args_str = (root.findtext(".//arguments") or "").strip()
+            parsed = json.loads(args_str)
+            if not name or not isinstance(parsed, dict):
+                raise ValueError("XML tool call requires a name and JSON object arguments")
+            func = getattr(self, "_tool_map", {}).get(name)
+            if not func:
+                return name, tuple(parsed.values())
+            params = inspect.signature(func).parameters
+            return name, tuple(parsed[param] for param in params if param in parsed)
+        except (ElementTree.ParseError, json.JSONDecodeError, ValueError) as e:
+            logger.log_event("PARSE_ERROR", {"format": "xml_tool_call", "error": str(e)})
             return None
 
     def _execute_tool(self, tool_name: str, args: tuple) -> str:

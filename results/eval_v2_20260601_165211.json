@@ -1,0 +1,71 @@
+{
+  "version": "v2",
+  "results": [
+    {
+      "id": "S1",
+      "type": "simple",
+      "query": "Đà Nẵng có gì đẹp để tham quan?",
+      "chatbot_answer": "# 🏖️ Những điểm tham quan đẹp ở Đà Nẵng\n\nĐà Nẵng là một trong những thành phố du lịch hấp dẫn nhất Việt Nam. Dưới đây là những điểm đến nổi tiếng bạn nên tham quan:\n\n---\n\n## 🌊 Biển & Bãi biển\n- **Bãi biển Mỹ Khê** – Một trong những bãi biển đẹp nhất hành tinh, cát trắng mịn, nước trong xanh.\n- **Bãi biển Non Nước** – Nằm dưới chân Ngũ Hành Sơn, yên tĩnh và thơ mộng.\n\n## ⛰️ Núi & Hang động\n- **Ngũ Hành Sơn (Non Nước)** – Quần thể 5 ngọn núi đá vôi với nhiều hang động, chùa chiền và làng đá mỹ nghệ.\n- **Bà Nà Hills** – Khu du lịch trên núi với **Cầu Vàng** nổi tiếng thế giới, làng Pháp, và khu vui chơi Fantasy Park.\n\n## 🌉 Cây cầu nổi tiếng\n- **Cầu Rồng** – Biểu tượng của Đà Nẵng, có thể phun lửa và nước vào cuối tuần.\n- **Cầu Tình Yêu** – Điểm check-in lãng mạn bên sông Hàn.\n- **Cầu Trần Thị Lý** – Thiết kế độc đáo hình cánh buồm.\n\n## 🏛️ Chùa & Di tích\n- **Chùa Linh Ứng (Bán đảo Sơn Trà)** – Có tượng Phật Quan Âm cao 67m, view biển tuyệt đẹp.\n- **Bảo tàng Chăm Pa** – Nơi lưu giữ hiện vật văn hóa Chăm Pa cổ đại.\n\n## 🏔️ Bán đảo Sơn Trà\n- Khu bảo tồn thiên nhiên với **voọc chà vá chân nâu** quý hiếm.\n- **Đỉnh Bàn Cờ** – Nơi ngắm toàn cảnh thành phố từ trên cao.\n- **Cây đa ngàn năm** – Cây đa cổ thụ nổi tiếng.\n\n## 🎡 Giải trí\n- **Asia Park** – Công viên giải trí với Sun Wheel khổng lồ.\n- **Helio Center** – Khu vui chơi, ẩm thực.\n\n## 🍜 Ẩm thực đặc sắc\n- **Mì Quảng**, **Bánh tráng cuốn thịt heo**, **Bánh xèo**, **Bún chả cá**, **Hải sản** tươi sống ven biển.\n\n---\n\n## 📌 Gợi ý lịch trìn",
+      "chatbot_ok": true,
+      "chatbot_ms": 18351,
+      "agent_answer": "Đà Nẵng có rất nhiều điểm tham quan đẹp, bạn có thể ghé thăm: **Bãi biển Mỹ Khê** – một trong những bãi biển quyến rũ nhất hành tinh, **Bà Nà Hills** – khu du lịch với Cầu Vàng nổi tiếng, **Cầu Rồng** – biểu tượng của thành phố có thể phun lửa và nước vào cuối tuần, và **Chợ đêm Sơn Trà** – nơi vui chơi, mua sắm và ẩm thực sôi động về đêm.",
+      "agent_ok": true,
+      "agent_ms": 15811
+    },
+    {
+      "id": "S2",
+      "type": "simple",
+      "query": "Thời tiết Đà Lạt tháng 6 thường thế nào?",
+      "chatbot_answer": "# Thời tiết Đà Lạt tháng 6 - Gợi ý chung\n\n## Tổng quan\n\nTháng 6 là thời điểm **mùa mưa** bắt đầu ở Đà Lạt. Nhìn chung:\n\n- **Nhiệt độ:** Khoảng **15°C – 25°C**, mát mẻ dễ chịu\n- **Lượng mưa:** Tương đối nhiều, mưa chủ yếu vào **chiều tối và đêm**\n- **Độ ẩm:** Khá cao\n- **Sáng sớm thường nắng đẹp**, chiều có thể mưa rào\n\n## Lưu ý khi du lịch tháng 6\n\n🌧️ **Về thời tiết:**\n- Mang theo **áo mưa, ô/dù** là điều cần thiết\n- Nên tranh thủ tham quan ngoài trời vào **buổi sáng**\n- Chiều tối nên linh hoạt sắp xếp hoạt động trong nhà\n\n👟 **Về trang phục:**\n- Mang áo khoác nhẹ vì sáng sớm và tối se lạnh\n- Giày dép chống trơn, đi mưa\n- Trang phục layers (nhiều lớp) để dễ điều chỉnh\n\n🌸 **Mùa mưa cũng có ưu điểm:**\n- Cảnh sắc Đà Lạt **xanh mướt, lãng mạn**\n- Ít khách du lịch hơn, không quá đông đúc\n- Giá dịch vụ có thể **mềm hơn** mùa cao điểm\n\n## Lưu ý quan trọng\n\n> ⚠️ Mình **không có dữ liệu thời tiết thời gian thực**, nên không thể cho bạn biết chính xác thời tiết Đà Lạt vào thời điểm cụ thể nào. Bạn nên kiểm tra **dự báo thời tiết cập nhật** trước chuyến đi để chuẩn bị tốt nhất nhé!\n\nBạn cần gợi ý thêm về lịch trình hay địa điểm tham quan ở Đà Lạt không? 😊",
+      "chatbot_ok": true,
+      "chatbot_ms": 12281,
+      "agent_answer": "Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}",
+      "agent_ok": false,
+      "agent_ms": 1553
+    },
+    {
+      "id": "M1",
+      "type": "multi_step",
+      "query": "Tôi muốn đi Đà Nẵng 3 ngày 2 đêm, ngân sách 5 triệu/người, đi cùng gia đình, thích biển và ăn hải sản. Hãy lên lịch trình tối ưu.",
+      "chatbot_answer": "# 🏖️ LỊCH TRÌNH ĐÀ NẴNG 3 NGÀY 2 ĐÊM\n\n## 💰 DỰ KIẾN PHÂN BỔ NGÂN SÁCH (5 triệu/người)\n\n| Hạng mục | Dự kiến |\n|----------|---------|\n| Di chuyển (vé xe/máy bay khứ hồi) | 1.000.000 - 1.500.000đ |\n| Khách sạn 2 đêm (chia phòng) | 800.000 - 1.200.000đ |\n| Ăn uống | 1.200.000 - 1.500.000đ |\n| Vui chơi, tham quan | 500.000 - 800.000đ |\n| Dự phòng, di chuyển nội thành | 300.000 - 500.000đ |\n\n---\n\n## 📅 NGÀY 1: BIỄN MỸ KHÊ & HẢI SẢN\n\n**Sáng**\n- Đến Đà Nẵng, nhận phòng khách sạn\n- Gợi ý khu vực: gần **bãi biển Mỹ Khê** để tiện đi lại\n\n**Trưa**\n- 🦐 Ăn hải sản tại **Hải sản Bé Mặn** hoặc quán hải sản đường Võ Nguyên Giáp\n- Các món nên thử: *mực hấp, tôm nướng, ghẹ rang me, ốc hút*\n\n**Chiều**\n- 🏊 Tắm biển **Mỹ Khê** – một trong những bãi biển đẹp nhất thế giới\n- Chơi các trò chơi trên biển (lướt ván, dù lượn...)\n\n**Tối**\n- 🦀 Ăn tối tại **Chợ đêm Helio** hoặc phố hải sản **Hồ Xuân Hương**\n- Dạo phố, thưởng thức **chè, bánh tráng nướng**\n\n---\n\n## 📅 NGÀY 2: BÀ NÀ HILLS & BIỂN NON NƯỚC\n\n**Sáng**\n- 🏰 Đi **Bà Nà Hills** (cầu Vàng, làng Pháp, khu vui chơi)\n- Nên đi sớm để tránh đông đúc\n- 💡 *Lưu ý: Mua vé online trước để tiết kiệm*\n\n**Trưa**\n- Ăn trưa tại Bà Nà (buffet hoặc nhà hàng trên đỉnh)\n\n**Chiều**\n- Quay về, tắm biển **Non Nước** (bãi tắm yên tĩnh, ít đông hơn)\n- Tham quan **Ngũ Hành Sơn** (gần biển Non Nước)\n\n**Tối**\n- 🦞 **Bữa tối hải sản thịnh soạn** tại **Hải sản Mậu** hoặc khu **Ngũ Hành Sơn**\n- Các món đặc biệt: *cua Huỳnh Đế, tôm hùm nướng, cá mú hấp*\n- Ngắm **Cầu Rồng phun lửa** (",
+      "chatbot_ok": true,
+      "chatbot_ms": 33568,
+      "agent_answer": "**Lịch trình Đà Nẵng 3 ngày 2 đêm - Gia đình (biển & hải sản)** 🌊🦐\n\n**Thông tin tổng quan:**\n- **Thời tiết:** Nắng đẹp 28-32°C, chiều có thể mưa rào ngắn.\n- **Ước tính chi phí:** 9.800.000 VND cho 2 người (còn dư 200.000 VND so với ngân sách 10 triệu).\n- **Cảnh báo:** Mang theo ô/áo mưa cho mưa chiều, ưu tiên hoạt động biển buổi sáng.\n\n**Lịch trình chi tiết:**\n\n**Ngày 1: Khám phá biển Mỹ Khê & Cầu Rồng**\n- **Sáng:** Đến Đà Nẵng, nhận khách sạn gần biển Mỹ Khê.\n- **Trưa:** Ăn hải sản tại **Bé Mặn Quán** (đặc sản tươi sống).\n- **Chiều:** Tắm biển Mỹ Khê, dạo phố biển.\n- **Tối:** Xem Cầu Rồng phun lửa (nếu cuối tuần), ăn tối tại **Chợ đêm Sơn Trà**.\n\n**Ngày 2: Ngũ Hành Sơn & Biển Non Nước**\n- **Sáng:** Tham quan **Ngũ Hành Sơn** (khám phá hang động, chùa).\n- **Trưa:** Ăn trưa tại **Làng Hải Sản** (đa dạng món).\n- **Chiều:** Tắm biển Non Nước, nghỉ ngơi.\n- **Tối:** Ăn tối tại **Hải sản Mậu**, dạo phố.\n\n**Ngày 3: Tự do & Mua sắm**\n- **Sáng:** Tắm biển lần cuối, mua quà lưu niệm.\n- **Trưa:** Ăn trưa, trả phòng.\n- **Chiều:** Ra sân bay/tàu về.\n\n**Gợi ý ăn uống:** Bé Mặn Quán, Hải sản Mậu, Quán Bé Thì, Làng Hải Sản - đa dạng từ bình dân đến cao cấp.\n\n**Lưu ý:** Thời tiết chiều có thể mưa ngắn, nên linh hoạt chuyển hoạt động trong nhà nếu cần. Chuyến đi phù hợp ngân sách, tối ưu cho gia đình yêu biển và hải sản!",
+      "agent_ok": true,
+      "agent_ms": 50121
+    },
+    {
+      "id": "M2",
+      "type": "multi_step",
+      "query": "Lên kế hoạch Đà Lạt 3 ngày, ngân sách 4 triệu, đi với bạn bè, thích chụp ảnh. Ước chi phí và gợi ý lịch trình.",
+      "chatbot_answer": "Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}",
+      "chatbot_ok": false,
+      "chatbot_ms": 1504,
+      "agent_answer": "Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}",
+      "agent_ok": false,
+      "agent_ms": 27478
+    },
+    {
+      "id": "M3",
+      "type": "multi_step",
+      "query": "Đi Phú Quốc 4 ngày 3 đêm, 2 người, ngân sách 8 triệu tổng. Có phù hợp không?",
+      "chatbot_answer": "Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}",
+      "chatbot_ok": false,
+      "chatbot_ms": 1688,
+      "agent_answer": "Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}",
+      "agent_ok": false,
+      "agent_ms": 1674
+    },
+    {
+      "id": "H1",
+      "type": "hard",
+      "query": "Đà Nẵng 2 ngày ngân sách 500 nghìn cho 4 người — lịch trình đầy đủ.",
+      "chatbot_answer": "Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}",
+      "chatbot_ok": false,
+      "chatbot_ms": 1713,
+      "agent_answer": "Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}",
+      "agent_ok": false,
+      "agent_ms": 1628
+    }
+  ]
+}

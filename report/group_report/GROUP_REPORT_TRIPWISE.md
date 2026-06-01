@@ -1,164 +1,176 @@
-# Group Report: TripWise Agent — Lab 3
+# Group Report: TripWise Agent - Lab 3
 
 - **Team Name**: TripWise
-- **Project**: AI Agent lập kế hoạch du lịch thông minh
-- **Individual Contribution**: Places/Attraction Tool Developer
-- **Team Member**: [Hoàng Phương Thảo, Nguyễn Sĩ Việt, Lương Quốc Đoàn, Bùi Minh Hiếu, Trương Hải Quân, Nguyễn Mai Hồng Trâm, Trịnh Vũ Anh Tuấn, Nguyễn Tiến Sĩ]
+- **Project**: AI Agent lap ke hoach du lich thong minh
+- **Team Size**: 9 thanh vien
 - **Deployment Date**: 2026-06-01
 
 ---
 
 ## 1. Executive Summary
 
-TripWise là AI Agent hỗ trợ lập kế hoạch du lịch cá nhân hóa (điểm đến, số ngày, ngân sách, phong cách). So với **chatbot baseline** (một lần gọi LLM, không tool), TripWise Agent dùng vòng **ReAct** để gọi tool mock (thời tiết, địa điểm, chi phí, lịch trình) rồi tổng hợp **Final Answer**.
+TripWise la AI Agent ho tro lap ke hoach du lich ca nhan hoa theo diem den, so
+ngay, ngan sach va phong cach. Chatbot baseline chi goi LLM mot lan. TripWise
+Agent dung vong ReAct de goi travel tools mock, nhan Observation va tong hop
+`Final Answer`.
 
-- **Success Rate (test suite 6 cases)**: Chatbot ~100% câu đơn giản (gợi ý chung); Agent ~100% khi LLM API khả dụng trên câu multi-step có gọi tool.
-- **Key Outcome**: Với câu multi-step (vd. Đà Nẵng 3N2Đ, 5 triệu, gia đình, biển + hải sản), Agent trả lịch trình + chi phí + thời tiết có **Observation** từ tool; Chatbot thường chỉ liệt kê địa danh, **không** đối chiếu ngân sách số liệu.
+MVP da chay voi Xiaomi Mimo compatible endpoint va model `mimo-v2.5-pro`. Hai
+lan full eval v1/v2 da duoc ghi lai. Ket qua bi anh huong boi rate limit `429`,
+nen bao cao tach ro request reliability va chat luong agent.
 
 ---
 
 ## 2. System Architecture & Tooling
 
-### 2.1 ReAct Loop Implementation
+### 2.1 ReAct Loop
 
-```
+```text
 User Request
-  → Thought (LLM)
-  → Action: tool_name(args)
-  → Observation (tool result — injected by system)
-  → … repeat …
-  → Final Answer (lịch trình + chi phí + lưu ý thời tiết)
+  -> Thought
+  -> Action: tool_name(args)
+  -> Observation (runtime inject)
+  -> repeat when needed
+  -> Final Answer
 ```
 
-Implementation: `src/agent/agent.py` — `ReActAgent.run()`
+Implementation: `src/agent/agent.py` - `ReActAgent.run()`
 
-### 2.2 Tool Definitions (Inventory)
+### 2.2 Tool inventory
 
-| Tool Name | Input | Agent | Use Case |
-| :--- | :--- | :--- | :--- |
-| `get_weather` | destination, date | v1 | Thời tiết điểm đến |
-| `search_attractions` | destination, travel_style | v1 | Địa điểm theo sở thích |
-| `estimate_trip_cost` | destination, days, people | v1 | Ước lượng chi phí (JSON) |
-| `create_itinerary` | destination, days, budget, style | v1 | Khung lịch trình theo ngày |
-| `calculate_route_time` | start, end | v2 | Thời gian di chuyển |
-| `suggest_restaurants` | destination, cuisine | v2 | Gợi ý quán ăn |
-| `check_budget_fit` | estimated_total, budget | v2 | So khớp ngân sách |
-| `weather_risk_warning` | destination | v2 | Cảnh báo outdoor |
+| Tool | Version | Use case |
+| :--- | :---: | :--- |
+| `get_weather` | v1 | Thoi tiet diem den |
+| `search_attractions` | v1 | Dia diem theo phong cach |
+| `estimate_trip_cost` | v1 | Uoc luong chi phi |
+| `create_itinerary` | v1 | Khung lich trinh |
+| `calculate_route_time` | v2 | Thoi gian di chuyen |
+| `suggest_restaurants` | v2 | Goi y quan an |
+| `check_budget_fit` | v2 | Kiem tra ngan sach |
+| `weather_risk_warning` | v2 | Canh bao outdoor |
 
-**Tool Design Evolution (v1 → v2)**  
-- **v1**: Mô tả ngắn → model đôi khi gọi sai số tham số.  
-- **v2**: Thêm `example` trong system prompt + tool budget/risk/route → giảm lỗi parse và thiếu bước kiểm tra ngân sách.
+Tool source: `src/tools/travel_tools.py`, registry: `src/tools/tool_specs.py`.
 
-Code: `src/tools/travel_tools.py`, `src/tools/tool_specs.py`
+### 2.3 Provider
 
-### 2.3 LLM Providers Used
-
-- **Primary**: OpenAI `gpt-4o` (via `DEFAULT_PROVIDER=openai`)
-- **Secondary**: Gemini / Local — `src/core/factory.py`
+- **Primary demo provider**: Mimo `mimo-v2.5-pro`
+- **Provider adapters**: Mimo, OpenAI, Gemini, local llama.cpp
+- **Factory**: `src/core/factory.py`
 
 ---
 
 ## 3. Telemetry & Performance Dashboard
 
-Logs: `logs/YYYY-MM-DD.log` (JSON events)
+Logs: `logs/YYYY-MM-DD.log`. Eval detail: `evaluation/evaluation_result.md`.
 
-| Metric | How to collect |
-| :--- | :--- |
-| Latency | `LLM_METRIC.latency_ms` |
-| Tokens | `prompt_tokens`, `completion_tokens` |
-| Cost estimate | `cost_estimate` in metrics |
-| Tool usage | `TOOL_CALL` events |
+| Metric | v1 full eval | v2 full eval |
+| :--- | ---: | ---: |
+| LLM calls co metric | 23 | 11 |
+| Latency P50 | 15,304 ms | 11,623 ms |
+| Latency P99 | 55,963 ms | 36,485 ms |
+| Avg latency | 18,755 ms | 14,176 ms |
+| Avg tokens / LLM call | 1,501 | 1,231 |
+| Total tokens | 34,512 | 13,536 |
+| Cost estimate | $0.34512 | $0.13536 |
+| Tool calls | 13 | 5 |
+| Parse warnings | 1 | 1 |
 
-```bash
-python scripts/parse_logs.py
-```
-
-*After a full eval run, fill P50/P99 from parsed output.*
-
----
-
-## 4. Root Cause Analysis (RCA)
-
-### Case Study A: OpenAI `insufficient_quota` (429)
-
-- **Input**: Smoke test / eval with valid key format
-- **Observation**: API trả 429 — không phải lỗi agent
-- **Root Cause**: Tài khoản hết credit / chưa billing
-- **Fix**: Nạp credit hoặc chuyển `DEFAULT_PROVIDER=google` / `local`
-
-### Case Study B: Parse / no Action
-
-- **Input**: Model trả prose không có `Action:` 
-- **Observation**: `PARSE_WARNING` trong log; transcript nhận Observation nhắc gọi tool
-- **Root Cause**: Prompt chưa đủ strict (v1)
-- **Fix**: Agent v2 prompt + examples; giới hạn `max_steps=8`
+Luu y: cost la mock estimate. So lieu v2 thap hon mot phan vi endpoint tra `429`
+va dung request som.
 
 ---
 
-## 5. Ablation Studies & Experiments
+## 4. Root Cause Analysis
 
-### Experiment 1: Prompt v1 vs v2
+### Case A: Provider rate limit `429`
 
-| | v1 | v2 |
+- **Observation**: Mot so request chatbot va agent that bai voi `Too many requests`.
+- **Root cause**: Endpoint gioi han tan suat goi.
+- **Next fix**: exponential backoff, delay giua eval cases va retry co gioi han.
+
+### Case B: XML-style tool call khong duoc parse trong ban eval
+
+- **Observation**: Model tra `<tool_call>...</tool_call>` thay vi
+  `Action: estimate_trip_cost(...)`.
+- **Root cause**: Tai thoi diem eval, parser regex chi ho tro
+  `Action: tool_name(args)`.
+- **Fix implemented**: them XML parser fallback va test hoi quy.
+- **Next fix**: uu tien structured tool calling neu provider ho tro.
+
+### Case C: Model tu viet Observation
+
+- **Observation**: Mot so trace co Observation do model tu sinh truoc khi runtime
+  inject Observation thuc.
+- **Risk**: Cau tra loi co the dua tren du lieu model tu tao.
+- **Next fix**: guardrail loai bo Observation tu model va chi tin runtime output.
+
+---
+
+## 5. Evaluation & Ablation
+
+### 5.1 Request reliability
+
+| Run | Chatbot requests OK | Agent requests OK | Ghi chu |
+| :--- | :---: | :---: | :--- |
+| v1 eval | 5/6 | 4/6 | Loi con lai do `429`. |
+| v2 eval | 3/6 | 2/6 | Rate limit tang trong nua sau cua run. |
+
+Khong dung bang nay de ket luan v2 kem hon v1 vi endpoint khong on dinh. Can
+chay lai voi retry/backoff de so sanh chat luong noi dung.
+
+### 5.2 Design evolution
+
+| | Agent v1 | Agent v2 |
 | :--- | :--- | :--- |
-| Tools | 4 core | +4 (route, restaurants, budget, risk) |
-| Prompt | Basic ReAct | + budget check + outdoor risk |
-| Result | Đủ demo MVP | Lịch trình chi tiết & kiểm tra ngân sách hơn |
+| Tools | 4 core tools | v1 + route, restaurant, budget, weather risk |
+| Prompt | Basic ReAct | Them budget verification va outdoor warning |
+| Muc tieu | Demo luong tool co ban | Tang kha nang lap ke hoach thuc te |
 
-### Experiment 2: Chatbot vs Agent
+---
 
-| Case | Chatbot | Agent | Winner |
-| :--- | :--- | :--- | :--- |
-| S1 Đà Nẵng có gì đẹp? | Gợi ý chung | Gợi ý + có thể gọi tool | Draw |
-| M1 Đà Nẵng 3N2Đ 5tr | Không có số liệu chi phí chính xác | Weather + cost + itinerary | **Agent** |
-| H1 Ngân sách 500k/4 người | Có thể vẫn “đẹp” văn bản | `check_budget_fit` báo vượt ngân sách | **Agent** |
+## 6. Production Readiness
 
-```bash
-python scripts/run_eval.py --limit 3
+- **Security**: `.env` duoc gitignore; khong dua API key vao log.
+- **Guardrails**: whitelist tool, `max_steps=8`.
+- **Reliability**: da co XML parser fallback; can them retry/backoff.
+- **Data**: thay mock data bang Weather API, Places API va Maps API.
+- **Scaling**: co the dung LangGraph, async tool calls va RAG du lich dia phuong.
+
+---
+
+## 7. How to Run
+
+```powershell
+cd "D:\VinUni\GG Colab\DAY 3\Day-3---Group"
+.\.venv\Scripts\Activate.ps1
+$env:PYTHONUTF8='1'
+
+python scripts\smoke_test.py
+python -m pytest tests\test_travel_tools.py -q
+python tripwise_agent.py --v2
+python scripts\run_eval.py
+python scripts\run_eval.py --v2
+python scripts\parse_logs.py
 ```
 
 ---
 
-## 6. Production Readiness Review
+## 8. Team Role Mapping - 9 Thanh Vien
 
-- **Security**: Sanitize tool args; không expose API keys (`.env` gitignored)
-- **Guardrails**: `max_steps=8`; chỉ whitelist tools trong registry
-- **Scaling**: Thay mock bằng Weather API, Google Places, Maps; LangGraph cho nhánh phức tạp
-- **RAG**: Embed guide du lịch địa phương cho FAQ
+Danh sach ten hien co trong ban nhap cu gom 8 thanh vien: Hoang Phuong Thao,
+Nguyen Si Viet, Luong Quoc Doan, Bui Minh Hieu, Truong Hai Quan, Nguyen Mai
+Hong Tram, Trinh Vu Anh Tuan va Nguyen Tien Si. Nhom can bo sung ten thanh vien
+thu 9 va xac nhan ai dam nhiem tung vai tro truoc khi nop.
 
----
+| STT | Thanh vien | Vai tro | Deliverable |
+| :---: | :--- | :--- | :--- |
+| 1 | [Nhom xac nhan] | Product Owner | `report/problem_statement.md` |
+| 2 | [Nhom xac nhan] | UX/Prompt Designer | `prompts/*.txt` |
+| 3 | [Nhom xac nhan] | Demo & Test Case Owner | `demo/*.md` |
+| 4 | [Nhom xac nhan] | Weather Tool Developer | Weather tool |
+| 5 | [Nhom xac nhan] | Places/Attraction Tool Developer | Places tool |
+| 6 | [Nhom xac nhan] | Cost & Budget Tool Developer | Cost tool |
+| 7 | [Nhom xac nhan] | ReAct Agent Developer | `src/agent/agent.py` |
+| 8 | [Nhom xac nhan] | Evaluation & Logging Owner | `evaluation/evaluation_result.md`, logs |
+| 9 | [Bo sung ten thanh vien 9] | Report & Slide Owner | Group report, `slides/presentation.pdf` |
 
-## 7. How to Run (Team)
-
-```bash
-pip install -r requirements.txt
-cp .env.example .env   # điền API key
-
-# Offline — không cần API
-pytest tests/test_travel_tools.py -q
-python scripts/run_eval.py --offline-tools-only
-
-# Chatbot baseline
-python chatbot.py
-
-# Agent v1 / v2
-python tripwise_agent.py
-python tripwise_agent.py --v2 --query "Tôi muốn đi Đà Nẵng 3 ngày..."
-
-# Eval + logs
-python scripts/run_eval.py --limit 2
-python scripts/parse_logs.py
-```
-
----
-
-## 8. Team Role Mapping (4 người)
-
-| Member | Deliverable |
-| :--- | :--- |
-| 1 | `src/tools/travel_tools.py` |
-| 2 | `src/agent/agent.py` |
-| 3 | `chatbot.py`, `tests/test_cases.json`, `scripts/run_eval.py` |
-| 4 | `scripts/parse_logs.py`, telemetry, group report |
-
-*Mỗi người vẫn nộp individual report riêng.*
+Moi thanh vien nop them bao cao ca nhan trong `report/individual_reports/`.
